@@ -44,7 +44,7 @@ test_loader = paddle.io.DataLoader(train_dataset, batch_size=32)
 model = CarBaselineModel()
 model.train()
 
-epochs = 200
+epochs = 50
 optim = paddle.optimizer.Adam(learning_rate=0.0001, parameters=model.parameters())
 loss_fn = paddle.nn.MSELoss()
 val_loss = 1
@@ -52,8 +52,8 @@ total_batch = 581
 for epoch in range(epochs):
     for batch_id, data in enumerate(train_loader()):
         img = data[0]
-        states = paddle.unsqueeze(data[1], axis=1)
-        label = data[2]
+        states = paddle.unsqueeze(data[1].astype('float32'), axis=1)
+        label = data[2].astype('float32')
         predicts = model(img, states)
         loss = loss_fn(predicts, label)
         loss.backward()

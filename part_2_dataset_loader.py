@@ -56,11 +56,11 @@ class AirSimCarDataSet(Dataset):
         with open(TRAIN_DATA,encoding='utf-8') as f:
             for line in f.readlines():
                  image_path, s1, s2, s3, s4, label = line.strip().split(',')
-                 self.train_data.append([image_path, np.array(s1).astype('float32'), np.array(label).astype('float32') ])
+                 self.train_data.append([image_path, np.array(s1).astype('float32')*10, np.array(label).astype('float32')*10 ])
         with open(TEST_DATA,encoding='utf-8') as f:
             for line in f.readlines():
                  image_path, s1, s2, s3, s4, label = line.strip().split(',')
-                 self.test_data.append([image_path, np.array([s1]).astype('float32'), np.array(label).astype('float32') ])
+                 self.test_data.append([image_path, np.array([s1]).astype('float32')*10, np.array(label).astype('float32')*10 ])
         if mode == 'test':
             self.data = self.test_data
         else:

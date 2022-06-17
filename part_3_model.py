@@ -83,7 +83,7 @@ class CarBaselineModel(nn.Layer):
         merged = self.linear_3(merged)
         return merged
 
-model = CarBaselineModel()
+# model = CarBaselineModel()
 
-paddle.summary(model, [(1, 3, 59, 255), (1, 1)], 
-                                        dtypes=['float32', 'float32'])
+# paddle.summary(model, [(1, 3, 59, 255), (1, 1)], 
+#                                         dtypes=['float32', 'float32'])

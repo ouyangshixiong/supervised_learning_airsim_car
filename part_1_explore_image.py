@@ -62,7 +62,8 @@ def showClipped():
     plt.show()
 
 def draw_image_with_label(img, label, prediction=None):
-    theta = label.numpy() * 0.69 #Steering range for the car is +- 40 degrees -> 0.69 radians
+    np_label = label.numpy() * 0.1
+    theta = np_label * 0.69 #Steering range for the car is +- 40 degrees -> 0.69 radians
     line_length = 50
     line_thickness = 3
     label_line_color = (255, 0, 0)
@@ -70,7 +71,7 @@ def draw_image_with_label(img, label, prediction=None):
     img = img.numpy().transpose((1, 2, 0))
     pil_image = Image.fromarray(cv2.cvtColor(np.uint8(img), cv2.COLOR_BGR2RGB))
 
-    print('Actual Steering Angle = {0}'.format(label.numpy()))
+    print('Actual Steering Angle = {0}'.format(np_label))
     draw_image = pil_image.copy()
     image_draw = ImageDraw.Draw(draw_image)
     first_point = (int(img.shape[1]/2),img.shape[0])
@@ -78,9 +79,10 @@ def draw_image_with_label(img, label, prediction=None):
     image_draw.line([first_point, second_point], fill=label_line_color, width=line_thickness)
 
     if (prediction is not None):
-        print('Predicted Steering Angle = {0}'.format(prediction.numpy()))
-        print('L1 Error: {0}'.format(abs(prediction.numpy()-label.numpy())))
-        theta = prediction * 0.69
+        np_prediction = prediction.numpy() * 0.1
+        print('Predicted Steering Angle = {0}'.format(np_prediction))
+        print('L1 Error: {0}'.format(abs(np_prediction-np_label)))
+        theta = np_prediction * 0.69
         second_point = (int((img.shape[1]/2) + (line_length * math.sin(theta))), int(img.shape[0] - (line_length * math.cos(theta))))
         image_draw.line([first_point, second_point], fill=prediction_line_color, width=line_thickness)
     
